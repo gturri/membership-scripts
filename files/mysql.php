@@ -78,9 +78,9 @@ class MysqlConnector {
         . ") AS tmp"
         . " WHERE lastRegistration < ?");
       $params = array_merge($membersEmail, [$this->dateTimeToMysqlStr($registeredBefore)]);
-      $stmtGetRegistrations->execute($params);
+      $stmtGetReturningMembers->execute($params);
       $ret = array();
-      foreach($stmtGetRegistrations->fetchAll() as $row){
+      foreach($stmtGetReturningMembers->fetchAll() as $row){
         $ret[] = new SimplifiedRegistrationEvent($row["first_name"], $row["last_name"], $row["email"], $row["lastRegistrationDate"]);
       }
       return $ret;
